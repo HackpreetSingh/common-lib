@@ -5,15 +5,14 @@ import com.amazonaws.services.s3.model.AmazonS3Exception;
 import com.amazonaws.services.s3.model.S3Object;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 import org.springframework.util.StreamUtils;
 
 import java.io.ByteArrayInputStream;
-import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 
-@Service
+@Component
 @Slf4j
 public class AwsService {
 
@@ -25,7 +24,7 @@ public class AwsService {
      * @param bucketName denotes the name of the bucket
      * @param key denotes the file path along with filename
      * @param content denotes content of file to be saved
-     * @throws IOException,AmazonS3Exception
+     * @throws AmazonS3Exception
      */
     public void saveToS3(String bucketName, String key, String content) throws Exception {
         InputStream s3InputStream = new ByteArrayInputStream(content.getBytes(StandardCharsets.UTF_8));
@@ -37,7 +36,7 @@ public class AwsService {
      * @param bucketName denotes the name of the bucket
      * @param key denotes the file path along with filename
      * @return the contents of the file being read
-     * @throws IOException,AmazonS3Exception
+     * @throws AmazonS3Exception
      */
     public String fetchFromS3(String bucketName, String key) throws Exception {
         S3Object s3Object = s3.getObject(bucketName, key);
